@@ -1,7 +1,7 @@
 #' Data set of marathon runner's training data. This data was extracted from
 #' the Prague Marathon in 2017.
 #'
-#' @format a data frame with 81 observations and 7 variables
+#' @format Data frame with 81 observations and 7 variables
 #' \describe{
 #'   \item{Category}{Age group and sex of athlete:
 #'   MAM Male Athletes under 40 years,
@@ -9,7 +9,7 @@
 #'   M40 Male Athletes between 40 and 45 years. }
 #'   \item{km4week}{The total number of kilometers run in the
 #'   4 weeks before the marathon, including the marathon.}
-#'   \item{sp4week}{The average speed of the athlete in the last 4 training weeks.}
+#'   \item{sp4week}{The average speed of the athlete in the last 4 training weeks in km/h.}
 #'   \item{CrossTraining}{If the athlete is also a cyclist or triathlete.}
 #'   \item{Wall}{The first half of the athletes marathon time in hours.
 #'   If the first half time is significantly shorter than the second half then
