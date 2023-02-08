@@ -1,0 +1,24 @@
+{
+    "id": "88AD20C1",
+    "path": "~/Desktop/GitHub/MarathonProject/R/hello.R",
+    "project_path": "R/hello.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1675884228380.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1675884226,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1675884226,
+    "read_only": false,
+    "read_only_alternatives": []
+}
