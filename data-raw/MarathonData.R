@@ -31,6 +31,12 @@ marathon$CrossTraining[marathon$CrossTraining == ""] <- "None"
 marathon <- marathon %>%
   mutate(Wall21 = as.numeric(Wall21))
 
+# make these columns factors
+marathon <- marathon %>%
+  mutate(Category = as.factor(Category)) %>%
+  mutate(CrossTraining = as.factor(CrossTraining)) %>%
+  mutate(FinishCategory = as.factor(FinishCategory))
+
 # remove NA fields
 marathon <- na.omit(marathon)
 
@@ -46,4 +52,4 @@ marathon <- marathon %>%
 view(marathon)
 
 # Save the data frame to the data/ directory
-usethis::use_data(marathon)
+usethis::use_data(marathon, overwrite = TRUE)

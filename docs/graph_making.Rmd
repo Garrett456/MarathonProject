@@ -1,0 +1,8 @@
+---
+title: "Making some graphs"
+author: "Garrett Marshall"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+
