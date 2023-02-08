@@ -53,3 +53,4 @@ str(marathon)
 
 # Save the data frame to the data/ directory
 usethis::use_data(marathon, overwrite = TRUE)
+
