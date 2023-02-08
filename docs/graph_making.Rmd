@@ -6,3 +6,43 @@ output: word_document
 ---
 
 
+```{r message=FALSE}
+library(tidyverse)
+library(MarathonProject)
+```
+
+```{r}
+view(marathon)
+```
+
+```{r}
+gender_age <- ggplot(marathon, aes(x=Category, y=MarathonTime, group=Category)) + 
+  geom_boxplot(aes(fill=Category))
+
+gender_age
+```
+
+```{r}
+viz1 <- ggplot(marathon, aes(x=km4week, y=MarathonTime)) +
+  geom_point(color="navy", size = 2)
+
+viz1
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
