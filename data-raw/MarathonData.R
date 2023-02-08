@@ -1,5 +1,5 @@
 #######
-# Data cleaning code
+# Data cleaning
 
 # load libraries
 library(tidyverse)

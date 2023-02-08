@@ -1,11 +1,10 @@
 Package: MarathonProject
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Marathon time prediction project
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Garrett Marshall
+Maintainer: The package maintainer <gam279@nau.edu>
+Description: This package cantains the data and analysis for a marathon time prediction project.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
