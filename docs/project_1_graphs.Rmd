@@ -1,0 +1,80 @@
+---
+title: "Graphics"
+author: "Garrett Marshall"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+
+```{r message=FALSE}
+library(tidyverse)
+library(MarathonProject)
+library(cowplot)
+```
+
+
+```{r}
+# added a new column that shows the percent of finish time that was the first half
+marathon <- marathon %>%
+  mutate(first_split_percent = round((Wall/MarathonTime*100), 2) )
+```
+
+```{r}
+marathon <- marathon %>%
+  mutate( cross_train_y_n = ifelse(CrossTraining=="None", "No", "Yes") )
+```
+
+
+```{r message=FALSE}
+plot1 <- ggplot(marathon, aes(x=MarathonTime, y=first_split_percent)) +
+  geom_point(color="royalblue4", size = 2) +
+  geom_smooth( method="lm", se=FALSE,fullrange=TRUE,color="grey46" ) +
+  labs( title="The Percent of the Marathon Time \n Allocated to the First Half", y="Percent of First Half Split", x="Finish Time (Hours)" )
+
+```
+
+
+```{r message=FALSE}
+plot2 <- ggplot(marathon, aes(x=MarathonTime, y=km4week)) +
+  geom_point(color="tomato3", size = 2) +
+  geom_smooth( method="lm", se=FALSE,fullrange=TRUE,color="grey46" ) +
+  labs( title="Total Kilometers Ran in the Four \n Weeks before the Marathon", y="Distance Ran (km)", x="Finish Time (Hours)" )
+
+```
+
+```{r fig.height=3, fig.width=7, message=FALSE}
+plot_grid(plot1, plot2)
+```
+
+The graphic above shows two scatter plots, the left shows the percent of the finish time allocated to the first half of the race compared to the athlete's finish time, and the right shows the total distance each athlete ran in the four weeks leading up to the race compared to their finish time. On the left, we see a positive trend where athletes with a lower percentage of their first half split finished the race faster than those whose first half split took up a higher percentage. We also see more of a spread in percent in athletes who finished between 3 and 4 hours. My theory as to why we see this is because athletes who can achieve a marathon time of under 3 hours are much more in tune with there physical consistency, resulting in less variability than athletes who are in that 3 to 4 hour range. In the plot on the left we see a negative trend where athletes who ran more leading up to the marathon achieved a lower finish time. The percent of first half split and the total distance ran before the race are two important metrics that contribute to an athlete running an efficient marathon. 
+
+
+
+
+```{r fig.height=4, fig.width=6}
+plot3 <- ggplot(marathon, aes(x=cross_train_y_n, y=MarathonTime, group=cross_train_y_n)) + 
+  geom_boxplot(aes(fill=cross_train_y_n), alpha=.8, fill=c("tomato3", "lightblue3")) +
+  labs( title="Marathon Time of Athletes who Cross Train Against Those who do not", x="Does the Athlete Cross Train?", y="Finish Time (Hours)" ) +
+  theme(legend.position="none")
+
+plot3
+```
+
+Caption: The box plots above show the average marathon finish time between athletes who cross train and athletes who do not cross train.
+
+The graphic above shows the difference in marathon finish times between athletes who cross train and athletes who do not. An athlete who cross trains would be someone who also trains another sport like cycling or swimming. The main difference we can see in these two groups is their means. The athletes who cross train have a higher average finish time than those who do not. I suspect we see this discrepancy because cross training athletes would have a bulkier physical build than athletes who solely do marathon training, which would result in a slower pace. I am interested in performing a t-test to see if there is a true difference in means between these two groups.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

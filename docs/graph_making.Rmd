@@ -9,11 +9,73 @@ output: word_document
 ```{r message=FALSE}
 library(tidyverse)
 library(MarathonProject)
+library(cowplot)
+library(patchwork)
 ```
 
 ```{r}
 view(marathon)
+str(marathon)
 ```
+
+```{r}
+# added a new column that shows the percent of finish time that was the first half
+marathon <- marathon %>%
+  mutate(first_split_percent = round((Wall/MarathonTime*100), 2) )
+```
+
+```{r}
+marathon <- marathon %>%
+  mutate( cross_train_y_n = ifelse(CrossTraining=="None", "No", "Yes") )
+```
+
+```{r}
+model <- lm(MarathonTime ~ first_split_percent, data = marathon )
+summary(model)
+```
+
+```{r}
+res <- plot(model, 1)
+qq <- plot(model, 2)
+```
+
+
+```{r message=FALSE}
+wall_percent <- ggplot(marathon, aes(x=MarathonTime, y=first_split_percent)) +
+  geom_point(color="royalblue4", size = 2) +
+  geom_smooth( method="lm", se=FALSE,fullrange=TRUE,color="grey46" ) +
+  labs( title="The Percent of the Marathon Time Allocated to the First Half", y="Percent of First Half Split", x="Finish Time (Hours)" )
+
+wall_percent 
+```
+
+In the graphic above, we see a trend where athletes with a lower percentage of the first half split finished the race faster than those whose first half split was a higher percentage. We also see more of a spread in first_half_split in athletes who finished after 3 hours. My theory as to why we see this is because athletes who can achieve a marathon time of under 3 hours are much more in tune with there physical consistency than athletes for are in that 3-4 hour range.
+
+
+```{r}
+cross_train_box_plot <- ggplot(marathon, aes(x=cross_train_y_n, y=MarathonTime, group=cross_train_y_n)) + 
+  geom_boxplot(aes(fill=cross_train_y_n), alpha=.8, fill=c("tomato3", "lightblue3")) +
+  labs( title="Marathon Time of Athletes who Cross Train Against Those who don't", x="Does the Athlete Cross Train?", y="Finish Time (Hours)" ) +
+  theme(legend.position="none")
+
+cross_train_box_plot
+```
+
+In the graphic above, we see box plots of two groups of athletes, those who cross train and those who do not. The box plot on the left shows that there is a lower average finish time for athletes who do not cross train. There also is more spread in finish times for those who do not cross train. The box plot representing athletes who do cross train have a higher average finish time and less spread.
+
+
+```{r}
+finish_cat_boxplots <- ggplot(marathon, aes(x=FinishCategory, y=first_split_percent, group=FinishCategory)) + 
+  geom_boxplot(aes(fill=FinishCategory)) +
+  labs( title="Percent of First Half split for each Finish Category", x="Finish Time Category", y="Percent of First Half Split" ) +
+  theme(legend.position="none")
+
+finish_cat_boxplots
+```
+
+
+
+
 
 ```{r}
 gender_age <- ggplot(marathon, aes(x=Category, y=MarathonTime, group=Category)) + 
@@ -23,19 +85,36 @@ gender_age
 ```
 
 ```{r}
-viz1 <- ggplot(marathon, aes(x=km4week, y=MarathonTime)) +
-  geom_point(color="navy", size = 2)
+plot2 <- ggplot(marathon, aes(x=MarathonTime, y=km4week)) +
+  geom_point()
+plot2
+```
 
-viz1
+
+```{r}
+plot1 <- ggplot(marathon, aes(x = MarathonTime, y = first_split_percent)) +
+  geom_point()
+plot1
+```
+
+```{r}
+plot_grid(plot1, plot2)
+```
+
+```{r}
+plot1 + plot2
 ```
 
 
 
+```{r}
+marathon_long <- marathon |> 
+  pivot_longer(c(first_split_percent, km4week), names_to = "variable")
 
-
-
-
-
+ggplot(marathon_long, aes(x = MarathonTime, y = value)) +
+  geom_point() +
+  facet_wrap(~variable, scales = "free_y", strip.position = "right", ncol = 1)
+```
 
 
 
